@@ -43,7 +43,7 @@ const blog = new mongoose.Schema({
         type: String,
         default: " "
     }
-
+    
 }, { timestamps: true } );
 
 module.exports = mongoose.model('blogProject', blog) //BlogProjects
