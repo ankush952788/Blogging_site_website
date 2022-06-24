@@ -8,7 +8,7 @@ const createBlog = async function (req, res) {
   {
     let data = req.body
     if(!data.authorId) {return res.status(400).send ("author Id is not valid")}
-    const savedData = await blogModel.create(data)
+    const savedData = await (await blogModel.create(data))
     res.status(201).send({ data : savedData })
   }
   catch (err) 

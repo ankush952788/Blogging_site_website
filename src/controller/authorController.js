@@ -73,7 +73,6 @@ const createAuthor = async function (req, res) {
     const savedData = await authorModel.create(data)
     return res.status(200).send({ data: savedData })
   }
-
   catch (err) {
     return res.status(500).send({ status: false, data: err.message })
   }
@@ -112,7 +111,7 @@ const loginAuthor = async function (req, res) {
 
     res.status(200).send({
       status: true,
-      token: "You Are Now Login In The App",
+      token: "You Are Login In The App",
       data: { token: token }
     });
   }
