@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken");
 const blogModel = require("../model/blogModel");
-const { find } = require("../model/authorModel");
+const authorModel = require("../model/authorModel");
 
 const createBlog = async function (req, res) {
   try 
@@ -44,4 +44,4 @@ const createBlog = async function (req, res) {
 // }
 
 module.exports.createBlog = createBlog
-module.exports.getBlog = getBlog
+//module.exports.getBlog = getBlog

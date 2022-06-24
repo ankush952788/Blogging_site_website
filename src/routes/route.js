@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authors = require("../controller/authorController");
+const blog = require("../controller/blogController");
 const middleware = require("../middleware/middleware");
 
 
@@ -16,7 +17,7 @@ router.post("/createAuthor",authors.createAuthor)
 router.post("/login", authors.loginAuthor)
 
 // BLOG CONTROLLER
-// //router.post("/createBlog", middleware.mid1/, blogs.createBlog)
+router.post("/createBlog", blog.createBlog)
 // router.get("/getBlog", middleware.mid1, blogs.getBlog)
 //  router.put("/updateBlog/:blogId", middleware.mid1, blogs.updateBlog)
 //  router.delete("/deleteBlog/:blogId", middleware.mid1, blogs.deleteBlog)
