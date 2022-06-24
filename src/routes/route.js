@@ -10,16 +10,19 @@ router.get("/me", function (req, res) {
 
 
 
-router.post("/createAuthor",middleware.mid1, authors.createAuthor)
-router.post("/createBlogs", authors.createBlog)
-router.post("/login",authors.loginAuthor)
-router.get("/getBlog", authors.getBlog)
-router.put("/updateBlog/:blogId", authors.updateBlog)
-router.delete("/deleteBlog/:blogId",authors.deleteBlog)
-router.delete("/deleteBlogByParams", authors.deleteBlogByParams)
 
+// AUTHOR CONTROLLER
+router.post("/createAuthor",authors.createAuthor)
+//NEW 
+router.post("/login", authors.loginAuthor)
+//
 
-router.get("/me", middleware.mid1,function (req, res) {res.send("My first ever api!")}) 
+// BLOG CONTROLLER
+router.post("/createBlog", middleware.mid1, blogs.createBlog)
+router.get("/getBlog", middleware.mid1, blogs.getBlogs)
+router.put("/updateBlog/:blogId", middleware.mid1, blogs.updateBlog)
+router.delete("/deleteBlog/:blogId", middleware.mid1, blogs.deleteBlog)
+router.delete("/deleteBlogsQueryParams", middleware.mid1, blogs.deleteBlogsQueryParams)
 
 
 module.exports = router;
