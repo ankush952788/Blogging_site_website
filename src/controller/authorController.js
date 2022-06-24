@@ -14,11 +14,6 @@ const isValid = function (value) {
   return true
 }
 
-// function to validate empty spaces
-// By TA
-const space = function (str) {
-  return /^\s*$/.test(str);
-}
 
 
 // CREATE AUTHOR
@@ -26,11 +21,17 @@ const createAuthor = async function (req, res) {
   try {
     let data = req.body
 
+    // function to validate empty spaces
+    // By TA
+    function space(str) {
+      return /^\s*$/.test(str);
+    }
     // ALL THE EDGE CASES ARE HERE FOR THE CREATE AUTHOR
 
     if (!isValid(data.fname)) {
       return res.status(400).send({ status: false, msg: "please Enter Valid fName" })
     }
+    //  discuss TA
     else if (space(data.fname) == true) {
       return res
         .status(400)
@@ -49,6 +50,7 @@ const createAuthor = async function (req, res) {
     if (!isValid(data.title)) {
       return res.status(400).send({ status: false, msg: "please Enter Valid Title" })
     }
+    // fname >>>>>title krna hai
     else if (space(data.title) == true) {
       return res
         .status(400)
@@ -67,6 +69,18 @@ const createAuthor = async function (req, res) {
     if (isEmailPresent) {
       return res.status(400).send({ status: false, msg: "EmailId Is Already Exist In DB" })
     }
+// password Add krna hai
+    // password validation
+    if (!data.password) {
+      return res
+        .status(400)
+        .send({ status: false, msg: " Please enter password(required field)" });
+    } else if (space(data.password) == true) {
+      return res
+        .status(400)
+        .send({ status: false, msg: "password cannot be a empty" });
+    }
+
 
     // end of edge cases
     // create author
@@ -85,6 +99,7 @@ const createAuthor = async function (req, res) {
 // AUTHENTICATION PART============================  
 
 const loginAuthor = async function (req, res) {
+
   try {
     let username = req.body.emailId;
     let password = req.body.password;
@@ -101,13 +116,6 @@ const loginAuthor = async function (req, res) {
 
     // AUTHENTICATION BEGINS HERE===================
 
-    let token = jwt.sign({
-      // provide the things which are unique like object id
-      authorId: user._id.toString(),
-    },
-      // secret key 
-      "project_1"
-    );
 
     res.status(200).send({
       status: true,

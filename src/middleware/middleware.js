@@ -1,77 +1,21 @@
-// const jwt = require ("jsonwebtoken");
-
-
-// let mid1 =  function (req,res,next) {
-
-//     try
-//     {
-//         let token = req.headers["x-api-key"];
-//         console.log(token)
-
-//         if (!token) token = req.headers["x-api-key"];
-
-//         if (!token) return res.send({ status: false, msg: "token must be present" });
-//         // console.log(token)
-
-//         next()
-//     }
-//     catch(error)
-//     {
-//         res.status(500).send({msg:" Authentication error "})
-//     }
-// }
-
-
-
-// AUTHORISATION START HERE
-//  let mid2 =  function (req,res,next) {
-
-//     try
-//     {
-//         let decodedToken = jwt.verify(token, "project_1");
-//         const userId = req.params.userId
-//         const tokenId = decodedToken.userId
-//         // console.log(decodedToken)
-
-//         if(tokenId != userId ) {
-//             res.send({ status: false, msg: "token is invalid" });
-//         }
-
-//         next()
-//     }
-//     catch(error)
-//     {
-//         res.status(500).send({msg:"Authorisation error"})
-//     }
-//  }
-// module.exports.mid1 = mid1
-// module.exports.mid2 = mid2
-
-
-// ===========================================================================
-
 const jwt = require("jsonwebtoken");
 const blogModel = require("../model/blogModel");
-const mongoose = require("mongoose");
 
 const mid1 = async function (req, res, next) {
-    try {
-        // case insensitivity of HTTP headers
+    try
+    {
         let token = req.headers["x-Api-key"];
         if (!token) token = req.headers["x-api-key"];
 
-        // if token is not provided
         if (!token)
             return res.status(400).send({
                 status: false,
-                msg: "Token required! Please login to generate token",
+                msg: "Token Is Not Present",
             });
 
-        let decodedToken = jwt.verify(token, "project_1");
+        let decodedToken = jwt.verify(token, "project_1")
         if (!decodedToken)
-            return res.status(401).send({ status: false, msg: "token is invalid" });
-
-        // if token is valid
+            return res.status(401).send({ status: false, msg: "token is invalid" })
         next();
     }
     catch (err) {
@@ -83,19 +27,17 @@ const mid2 = async function (req, res, next) {
     try {
         // token sent in request header "x-api-key"
         let token = req.headers["x-api-key"];
-        console.log(token)
-
-        // decoded token using verify method
+        
         let decodedToken = jwt.verify(token, "project_1");
 
         // blogId sent through path variable
         let blogId = req.params.blogId;
 
         // CASE-1: blogId is empty
-        if (blogId === ":blogId") {
+        if (blogId.length == 0) {
             return res
                 .status(400)
-                .send({ status: false, msg: "Please enter blogId to proceed!" });
+                .send({ status: false, msg: "Your Blog Id Is Empty" });
         }
         // CASE-2: blogId is not an ObjectId
         else if (!mongoose.Types.ObjectId.isValid(blogId)) {
@@ -109,7 +51,7 @@ const mid2 = async function (req, res, next) {
         if (!blog) {
             return res.status(400).send({
                 status: false,
-                msg: "We are sorry; Given blogId does not exist!",
+                msg: "Given blogId does not exist!",
             });
         }
 
@@ -127,6 +69,7 @@ const mid2 = async function (req, res, next) {
     }
 };
 
-module.exports = { mid1, mid2 };
+module.exports.mid1 = mid1
+module.exports.mid2 = mid2
 
 
