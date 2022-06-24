@@ -73,10 +73,10 @@ const mid1 = async function (req, res, next) {
 
         // if token is valid
         next();
-    } 
+    }
     catch (err) {
         return res.status(500).send({ status: false, data: err.message })
-      }
+    }
 };
 
 const mid2 = async function (req, res, next) {
@@ -121,10 +121,10 @@ const mid2 = async function (req, res, next) {
         } else if (decodedToken.authorId === blog.authorId.toString()) {
             next();
         }
-    } 
+    }
     catch (err) {
         return res.status(500).send({ status: false, data: err.message })
-      }
+    }
 };
 
 module.exports = { mid1, mid2 };
