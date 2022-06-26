@@ -69,6 +69,7 @@ const createAuthor = async function (req, res) {
     if (isEmailPresent) {
       return res.status(400).send({ status: false, msg: "EmailId Is Already Exist In DB" })
     }
+    
 // password Add krna hai
     // password validation
     if (!data.password) {
