@@ -32,7 +32,6 @@ const blog = new mongoose.Schema({
         type: [String],
         required: true,
         trim: true
-
     },
     isDeleted: {
         type: Boolean, 

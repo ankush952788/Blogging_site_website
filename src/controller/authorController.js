@@ -20,9 +20,12 @@ const isValid = function (value) {
 const createAuthor = async function (req, res) {
   try {
     let data = req.body
+    if (Object.keys(data).length == 0) {
+      return res.status(400).send({ msg: "Please provide blog details" })
+    }
 
     // function to validate empty spaces
-    // By TA
+    // By TA REGEX
     function space(str) {
       return /^\s*$/.test(str);
     }
@@ -50,7 +53,6 @@ const createAuthor = async function (req, res) {
     if (!isValid(data.title)) {
       return res.status(400).send({ status: false, msg: "please Enter Valid Title" })
     }
-    // fname >>>>>title krna hai
     else if (space(data.title) == true) {
       return res
         .status(400)
@@ -88,6 +90,7 @@ const createAuthor = async function (req, res) {
     const savedData = await authorModel.create(data)
     return res.status(200).send({ data: savedData })
   }
+
   catch (err) {
     return res.status(500).send({ status: false, data: err.message })
   }
@@ -113,7 +116,6 @@ const loginAuthor = async function (req, res) {
       status: false,
       msg: " username or password is incorrect "
     });
-
 
     // AUTHENTICATION BEGINS HERE===================
 
