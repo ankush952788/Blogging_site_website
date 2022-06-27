@@ -12,7 +12,10 @@ router.get("/me", function (req, res) {
 
 
 
+
+// AUTHOR CREATE
 router.post("/authors", authors.createAuthor) //no need to enter token
+
 // LOGIN AUTHOR
 router.post("/login", authors.loginAuthor) //no need to enter token
 

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const blogModel = require("../model/blogModel");
 const authorModel = require("../model/authorModel");
+const { findOne } = require("../model/authorModel");
 
 const createBlog = async function (req, res) {
   try {
@@ -118,10 +119,21 @@ const deleteBlog = async function (req, res) {
     if (!Blog) {
       return res.status(404).send({ status: false, msg: "BlogId Not Exist In DB" })
     }
+    let find = await blogModel.findOneAndUpdate(
+      { _id: BlogId },
+      { $set: { isDeleted: true, deletedAt: date } },
+      { new: true })
+
+    //IF THE BLOG IS ALREADY DELETED   ???? BY TA ????
+    // if (check && check.isDeleted) {
+    //   return res.status(404).send({ status: false, msg: "ALREADY DELETED" })
+    // }
+
+    return res.status(200).send({ status: true, msg: " DATA IS DELETED ", data: check })
   }
 
-  catch (err) {
-    return res.status(500).send({ status: false, data: err.name })
+  catch (error) {
+    return res.status(500).send({ status: false, data: error.name })
   }
 }
 

@@ -128,17 +128,10 @@ const loginAuthor = async function (req, res) {
   }
   
 
-
-
   catch (err) {
   return res.status(500).send({ status: false, data: err.message })
 }
 };
 
-
-
 module.exports.createAuthor = createAuthor
-
-// new 
-// authentication and authorisation
 module.exports.loginAuthor = loginAuthor
