@@ -97,6 +97,7 @@ const getBlog = async function (req, res) {
     res.status(500).send({ msg: err.name })
   }
   }
+  
 
 
 
@@ -107,36 +108,8 @@ const updateBlog = async function (req, res) {
     if (Object.keys(data).length == 0) {
       return res.status(400).send({ status: false, msg: "Please provide blog details" })
     }
-
-    let title = req.body.title
-    let body = req.body.body
-    let tags = req.body.tags
-    let category = req.body.category
-    let subcategory = req.body.subcategory
-    let date1 = new Date()
-
-    const updateZBlog = await blogModel.findOneAndUpdate({ _id: BlogId, isDeleted: false },
-      {
-        $set: {
-          title: title, body: body, tags: tags, category:category,subcategory: subcategory, isPublished: true,
-          publishedAt: date1
-        }
-      }, { new: true });
-
-
-    // res.status(200).send({ status: true, data:  updateZBlog })
-
-    const blogdata = updateZBlog ?? "BLog not found"
-    res.status(200).send({ status: true, data: blogdata })
-
-    // console.log(updateblog)
-    // blogid exist ka bar m TA se dicuss
-    // if do not provide the blog id
-
-  } catch (err) {
-    res.status(500).send({ msg: err.name })
   }
-}
+
 
 
 // delete blogs ===================================================
@@ -156,7 +129,7 @@ const deleteBlog = async function (req, res) {
       { new: true })
 
     //IF THE BLOG IS ALREADY DELETED   ???? BY TA ????
-    if ( check ) {
+    if ( !check ) {
       return res.status(404).send({ status: false, msg: "ALREADY DELETED" })
     }
 
@@ -186,7 +159,7 @@ const deleteBlogsQueryParams = async function (req, res) {
     const blogs = await blogModel.find({ ...queryparms, isDeleted: false, authorId: Inuser })
     // console.log(blogs)
 
-    if (blogs.length == 0) {
+    if (!blogs.length == 0) {
       return res.status(404).send({ status: false, msg: " Already Deleted" })
     }
 

@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
 const blogModel = require("../model/blogModel");
+const mongoose = require("mongoose");
 
 const isValidObjectId = (ObjectId) => {
     return mongoose.Types.ObjectId.isValid(ObjectId)
 }
 
-const mid1 = async function (req, res, next) {
+const authentication = async function (req, res, next) {
     try {
         let token = req.headers["x-Api-key"];
         if (!token) token = req.headers["x-api-key"];
@@ -32,7 +33,7 @@ const mid1 = async function (req, res, next) {
     }
 };
 
-const mid2 = async function (req, res, next) {
+const authorization = async function (req, res, next) {
     try {
 
         let Inuser = req.authorId
@@ -75,5 +76,5 @@ const mid2 = async function (req, res, next) {
     }
 };
 
-module.exports.mid1 = mid1
-module.exports.mid2 = mid2
+module.exports.authentication = authentication
+module.exports.authorization = authorization

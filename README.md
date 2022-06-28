@@ -1,15 +1,23 @@
-# Project_1-Blog_Web-
-Radon
-Repository for backend cohort - Radon
+**# Project_1-Blog_Web-**
+**Radon**
+**Repository for backend cohort - Radon**
 
-Blogging Site Mini Project Requirement
+**Blogging Site Mini Project Requirement**
+
 Phase I
+
 Models
-Author Model
+
+**Author Model**
+
 { fname: { mandatory}, lname: {mandatory}, title: {mandatory, enum[Mr, Mrs, Miss]}, email: {mandatory, valid email, unique}, password: {mandatory} }
-Blogs Model
+
+**Blogs Model**
+
 { title: {mandatory}, body: {mandatory}, authorId: {mandatory, refs to author model}, tags: {array of string}, category: {string, mandatory, examples: [technology, entertainment, life style, food, fashion]}, subcategory: {array of string, examples[technology-[web development, mobile development, AI, ML etc]] }, createdAt, updatedAt, deletedAt: {when the document is deleted}, isDeleted: {boolean, default: false}, publishedAt: {when the blog is published}, isPublished: {boolean, default: false}}
-Author APIs /authors
+
+**Author APIs /authors**
+
 Create an author - atleast 5 authors
 Create a author document from request body. Endpoint: BASE_URL/authors
 POST /blogs
@@ -23,7 +31,7 @@ Create atleast 5 blogs for each author
 
 Return HTTP status 400 for an invalid request with a response body like this
 
-GET /blogs
+**GET /blogs**
 Returns all blogs in the collection that aren't deleted and are published
 Return the HTTP status 200 if any documents are found. The response structure should be like this
 If no documents are found then return an HTTP status 404 with a response like this
@@ -39,27 +47,45 @@ Check if the blogId exists (must have isDeleted false). If it doesn't, return an
 Return an HTTP status 200 if updated successfully with a body like this
 Also make sure in the response you return the updated blog document.
 
+<<<<<<< HEAD
 DELETE /blogs/:blogId
 Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
 If the blog document doesn't exist then return an HTTP status of 404 with a body like this
 
 DELETE /blogs?queryParams
+=======
+**DELETE /blogs/:blogId**
+Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
+If the blog document doesn't exist then return an HTTP status of 404 with a body like this
+
+**DELETE /blogs?queryParams**
+>>>>>>> 7449e0ff4e3696d92e1684bad7aec68f354c2354
 Delete blog documents by category, authorid, tag name, subcategory name, unpublished
 If the blog document doesn't exist then return an HTTP status of 404 with a body like this
 
 
+<<<<<<< HEAD
 
 Phase II
+=======
+**Phase II**
+
+>>>>>>> 7449e0ff4e3696d92e1684bad7aec68f354c2354
 Add authentication and authroisation feature
-POST /login
+
+**POST /login**
 Allow an author to login with their email and password. On a successful login attempt return a JWT token contatining the authorId
 If the credentials are incorrect return a suitable error message with a valid HTTP status code
-Authentication
+
+**Authentication**
+
 Add an authorisation implementation for the JWT token that validates the token before every protected endpoint is called. If the validation fails, return a suitable error message with a corresponding HTTP status code
 Protected routes are create a blog, edit a blog, get the list of blogs, delete a blog(s)
 Set the token, once validated, in the request - x-api-key
 Use a middleware for authentication purpose.
-Authorisation
+
+**Authorisation**
+
 Make sure that only the owner of the blogs is able to edit or delete the blog.
 In case of unauthorized access return an appropirate error message.
 Testing (Self-evaluation During Development)

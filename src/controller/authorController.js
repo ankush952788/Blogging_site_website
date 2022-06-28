@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const authorModel = require("../model/authorModel")
 const blogModel = require("../model/blogModel")
 const jwt = require("jsonwebtoken")
