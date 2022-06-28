@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const author = new mongoose.Schema({
 
     fname:{

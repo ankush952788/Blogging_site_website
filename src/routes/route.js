@@ -11,8 +11,6 @@ router.get("/me", function (req, res) {
 
 
 
-
-
 // AUTHOR CREATE
 router.post("/authors", authors.createAuthor) //no need to enter token
 

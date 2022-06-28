@@ -4,8 +4,6 @@ const blogModel = require("../model/blogModel")
 const jwt = require("jsonwebtoken")
 
 
-
-
 // make a function for validation for the fname,lname,title in the author
 // By TA
 const isValid = function (value) {
@@ -60,7 +58,7 @@ const createAuthor = async function (req, res) {
     }
 
 
-    // EMAIL DUPLICAY AND SYNTAX OF IT
+    // EMAIL DUPLICAY AND SYNTAX OF IT BY TA
 
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email))) {
       return res.status(400).send({ status: false, msg: "please Enter Valid Email" })
@@ -78,14 +76,13 @@ const createAuthor = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, msg: " Please enter password(required field)" });
-    } else if (space(data.password) == true) {
+    } 
+    else if (space(data.password) == true) {
       return res
         .status(400)
         .send({ status: false, msg: "password cannot be a empty" });
     }
 
-
-    // end of edge cases
     // create author
     const savedData = await authorModel.create(data)
     return res.status(200).send({ data: savedData })
@@ -103,7 +100,6 @@ const createAuthor = async function (req, res) {
 // AUTHENTICATION PART============================  
 
 const loginAuthor = async function (req, res) {
-
   try {
     let username = req.body.emailId;
     let password = req.body.password;
@@ -115,7 +111,8 @@ const loginAuthor = async function (req, res) {
     if (!user) return res.status(400).send({
       status: false,
       msg: " username or password is incorrect "
-    });
+    })
+
 
     // AUTHENTICATION BEGINS HERE===================
 

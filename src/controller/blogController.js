@@ -29,13 +29,14 @@ const createBlog = async function (req, res) {
 
     if (!createAuthor) { return res.status(400).send({ msg: "author is not valid" }) }
 
-    const savedData = await blogModel.create(data)
+    const savedData = await (await blogModel.create(data))
     res.status(201).send({ data: savedData })
   }
   catch (err) {
     return res.status(500).send({ status: false, data: err.message })
   }
 }
+
 
 
 const getBlog = async function (req, res) {
@@ -56,6 +57,10 @@ const getBlog = async function (req, res) {
         })
         return res.status(200).send({ data: container})
     }
+    // if (authorId) {
+    //   if (!mongoose.isValidObjectId(authorId))
+    //     return res.status(400).send({ status: false, msg: "Invalid AuthorId" })
+    // }
 
   }
   catch (err) 
@@ -76,6 +81,7 @@ const updateBlog = async function (req, res) {
     let title = req.body.title
     let body = req.body.body
     let tags = req.body.tags
+    let category = req.body.category
     let subcategory = req.body.subcategory
     let date1 = new Date()
 
@@ -125,9 +131,9 @@ const deleteBlog = async function (req, res) {
       { new: true })
 
     //IF THE BLOG IS ALREADY DELETED   ???? BY TA ????
-    // if (check && check.isDeleted) {
-    //   return res.status(404).send({ status: false, msg: "ALREADY DELETED" })
-    // }
+    if ( check ) {
+      return res.status(404).send({ status: false, msg: "ALREADY DELETED" })
+    }
 
     return res.status(200).send({ status: true, msg: " DATA IS DELETED ", data: check })
   }
@@ -156,7 +162,7 @@ const deleteBlogsQueryParams = async function (req, res) {
     // console.log(blogs)
 
     if (blogs.length == 0) {
-      return res.status(404).send({ status: false, msg: "blogs does not exists" })
+      return res.status(404).send({ status: false, msg: " Already Deleted" })
     }
 
     const deleteBlog = await blogModel.updateMany({ _id: { $in: blogs } }, { $set: { isDeleted: true, deletedAt: data2 } })
