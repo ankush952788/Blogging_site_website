@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const authorModel = require("../model/authorModel")
-const blogModel = require("../model/blogModel")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 
 // make a function for validation for the fname,lname,title in the author
@@ -11,7 +10,6 @@ const isValid = function (value) {
   if (typeof value === "string" && value.trim().length === 0) return false
   return true
 }
-
 
 
 // CREATE AUTHOR
@@ -69,8 +67,7 @@ const createAuthor = async function (req, res) {
     if (isEmailPresent) {
       return res.status(400).send({ status: false, msg: "EmailId Is Already Exist In DB" })
     }
-    
-// password Add krna hai
+
     // password validation
     if (!data.password) {
       return res
@@ -94,19 +91,19 @@ const createAuthor = async function (req, res) {
 
 }
 
-
-
-
-// AUTHENTICATION PART============================  
-
+// LOGIN AUTHOR ==========================
 const loginAuthor = async function (req, res) {
   try {
-    let username = req.body.emailId;
-    let password = req.body.password;
-    let user = await authorModel.findOne({ emailId: username, password: password });
-    if (!user) return res.send({ status: false, msg: " username or password is incorrect " });
+    // req.body.email is used in postman it can be change both sides
+    let username = req.body.email
+    let password = req.body.password
 
-    
+
+    let user = await authorModel.findOne({
+      email: username,
+      password: password
+    })
+   
 
     if (!user) return res.status(400).send({
       status: false,
@@ -116,6 +113,14 @@ const loginAuthor = async function (req, res) {
 
     // AUTHENTICATION BEGINS HERE===================
 
+    let token = jwt.sign({
+      // provide the things which are unique like object id
+      authorId: user._id.toString(),
+      batch: "Radon",
+    },
+      // secret key 
+      "project_1"
+    );
 
     res.status(200).send({
       status: true,
@@ -123,12 +128,11 @@ const loginAuthor = async function (req, res) {
       data: { token: token }
     });
   }
-  
 
   catch (err) {
-  return res.status(500).send({ status: false, data: err.message })
+    return res.status(500).send({ status: false, data0: err.name,data1: err.message })
+  }
 }
-};
 
-module.exports.createAuthor = createAuthor
 module.exports.loginAuthor = loginAuthor
+module.exports.createAuthor = createAuthor

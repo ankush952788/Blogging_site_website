@@ -4,6 +4,7 @@ const blogModel = require("../model/blogModel");
 const authorModel = require("../model/authorModel");
 const { findOne } = require("../model/authorModel");
 
+
 const createBlog = async function (req, res) {
   try {
     let data = req.body
@@ -38,7 +39,6 @@ const createBlog = async function (req, res) {
 }
 
 
-//=============================================================================
 const getBlog = async function (req, res) {
   try {
 
@@ -99,14 +99,41 @@ const getBlog = async function (req, res) {
   }
   
 
-
-
-const updateBlog = async function (req, res) {
-  try {
-    let data = req.body
-    let BlogId = req.params.blogId;
-    if (Object.keys(data).length == 0) {
-      return res.status(400).send({ status: false, msg: "Please provide blog details" })
+  const updateBlog = async function (req, res) {
+    try {
+      let data = req.body
+      let BlogId = req.params.blogId;
+      if (Object.keys(data).length == 0) {
+        return res.status(400).send({ status: false, msg: "Please provide blog details" })
+      }
+  
+      let title = req.body.title
+      let body = req.body.body
+      let tags = req.body.tags
+      let category = req.body.category
+      let subcategory = req.body.subcategory
+      let date1 = new Date()
+  
+      const updateZBlog = await blogModel.findOneAndUpdate({ _id: BlogId, isDeleted: false },
+        {
+          $set: {
+            title: title, body: body, tags: tags, category:category,subcategory: subcategory, isPublished: true,
+            publishedAt: date1
+          }
+        }, { new: true });
+  
+  
+      // res.status(200).send({ status: true, data:  updateZBlog })
+  
+      const blogdata = updateZBlog ?? "BLog not found"
+      res.status(200).send({ status: true, data: blogdata })
+  
+      // console.log(updateblog)
+      // blogid exist ka bar m TA se dicuss
+      // if do not provide the blog id
+  
+    } catch (err) {
+      res.status(500).send({ msg: err.name })
     }
   }
 
@@ -171,6 +198,7 @@ const deleteBlogsQueryParams = async function (req, res) {
     return res.status(500).send({ status: false, data: err.name })
   }
 }
+
 
 module.exports.createBlog = createBlog
 module.exports.getBlog = getBlog

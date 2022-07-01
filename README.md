@@ -47,30 +47,17 @@ Check if the blogId exists (must have isDeleted false). If it doesn't, return an
 Return an HTTP status 200 if updated successfully with a body like this
 Also make sure in the response you return the updated blog document.
 
-<<<<<<< HEAD
 DELETE /blogs/:blogId
 Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
 If the blog document doesn't exist then return an HTTP status of 404 with a body like this
 
 DELETE /blogs?queryParams
-=======
-**DELETE /blogs/:blogId**
-Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
-If the blog document doesn't exist then return an HTTP status of 404 with a body like this
-
-**DELETE /blogs?queryParams**
->>>>>>> 7449e0ff4e3696d92e1684bad7aec68f354c2354
 Delete blog documents by category, authorid, tag name, subcategory name, unpublished
 If the blog document doesn't exist then return an HTTP status of 404 with a body like this
 
 
-<<<<<<< HEAD
 
 Phase II
-=======
-**Phase II**
-
->>>>>>> 7449e0ff4e3696d92e1684bad7aec68f354c2354
 Add authentication and authroisation feature
 
 **POST /login**
